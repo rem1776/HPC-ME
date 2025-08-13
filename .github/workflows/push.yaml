@@ -6,7 +6,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout Files
-      uses: actions/checkout@v3
+      uses: actions/checkout@v5.0.0
     - name: Login to Github Container Registry
       uses: docker/login-action@v1
       with:
@@ -14,27 +14,27 @@ jobs:
         password: ${{ secrets.GITHUB_TOKEN }}
         registry: ghcr.io
     - name: Build base image
-      uses: docker/build-push-action@v5.1.0
+      uses: docker/build-push-action@v6.18.0
       with:
         context: ci/
         push: false
         file: "Dockerfile-base"
     - name: Build fms image
-      uses: docker/build-push-action@v5.1.0
+      uses: docker/build-push-action@v6.18.0
       with:
         context: ci/
         push: true
         file: "Dockerfile-fms"
         tag: ghcr.io/noaa-gfdl/fms/fms-ci-gnu:15
     - name: Build fre-nctools image
-      uses: docker/build-push-action@v5.1.0
+      uses: docker/build-push-action@v6.18.0
       with:
         context: ci/
         push: false
         file: "Dockerfile-frenct"
         tag: ghcr.io/noaa-gfdl/fre-nctools/frenct-ci-gnu:15
     - name: Build fre-cli image
-      uses: docker/build-push-action@v5.1.0
+      uses: docker/build-push-action@v6.18.0
       with:
         context: ci/
         push: false
