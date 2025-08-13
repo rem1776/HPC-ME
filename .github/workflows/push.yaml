@@ -1,27 +1,42 @@
-## must be triggered manually to push image
-name: Build and Push FMS CI Image (GNU)
-on: 
-  workflow_dispatch:
-    inputs:
-      version:
-        description: "Version number for the pushed image, usually the compiler version"
-        required: true
+name: Build and Push CI Images
+on: push
+
 jobs:
-  push_image:
+  build-ci-images:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout Files
       uses: actions/checkout@v3
     - name: Login to Github Container Registry
       uses: docker/login-action@v1
-      with: 
+      with:
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
-        registry: ghcr.io 
-    - name: Build and Push Image
+        registry: ghcr.io
+    - name: Build base image
       uses: docker/build-push-action@v5.1.0
       with:
-        context: ci/fms-gnu 
+        context: ci/
+        push: false
+        file: "Dockerfile-base"
+    - name: Build fms image
+      uses: docker/build-push-action@v5.1.0
+      with:
+        context: ci/
         push: true
-        tags: "ghcr.io/noaa-gfdl/fms/fms-ci-rocky-gnu:${{ github.event.inputs.version }}"
-        file: "Dockerfile"
+        file: "Dockerfile-fms"
+        tag: ghcr.io/noaa-gfdl/fms/fms-ci-gnu:15
+    - name: Build fre-nctools image
+      uses: docker/build-push-action@v5.1.0
+      with:
+        context: ci/
+        push: false
+        file: "Dockerfile-frenct"
+        tag: ghcr.io/noaa-gfdl/fre-nctools/frenct-ci-gnu:15
+    - name: Build fre-cli image
+      uses: docker/build-push-action@v5.1.0
+      with:
+        context: ci/
+        push: false
+        file: "Dockerfile-frecli"
+        tag: ghcr.io/noaa-gfdl/fre-nctools/frecli-ci-gnu:15
