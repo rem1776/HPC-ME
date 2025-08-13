@@ -25,18 +25,18 @@ jobs:
         context: ci/
         push: true
         file: "ci/Dockerfile-fms"
-        tag: ghcr.io/noaa-gfdl/fms/fms-ci-gnu:15
+        tags: ghcr.io/noaa-gfdl/fms/fms-ci-gnu:15
     - name: Build fre-nctools image
       uses: docker/build-push-action@v6.18.0
       with:
         context: ci/
         push: false
         file: "ci/Dockerfile-frenct"
-        tag: ghcr.io/noaa-gfdl/fre-nctools/frenct-ci-gnu:15
+        tags: ghcr.io/noaa-gfdl/fre-nctools/frenct-ci-gnu:15
     - name: Build fre-cli image
       uses: docker/build-push-action@v6.18.0
       with:
         context: ci/
         push: false
         file: "ci/Dockerfile-frecli"
-        tag: ghcr.io/noaa-gfdl/fre-nctools/frecli-ci-gnu:15
+        tags: ghcr.io/noaa-gfdl/fre-nctools/frecli-ci-gnu:15
