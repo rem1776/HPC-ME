@@ -1,0 +1,25 @@
+# image recipe for FRE-NCtools CI
+# uses gcc + mpich base image on arch linux
+
+FROM arch-gnu-openmpi-base 
+
+# set up user for installing yay for community packages
+RUN useradd --system --create-home ci && \
+    pacman -Syu --noconfirm --needed sudo base-devel && \
+    echo "ci ALL=(ALL:ALL) NOPASSWD:ALL" > /etc/sudoers.d/ci && \
+    git clone https://aur.archlinux.org/yay-bin.git && \
+    chmod 777 yay-bin
+
+# some extras needed for container building
+RUN pacman -Syu \
+  fuse-overlayfs=1.15-1 \
+  podman=5.5.2-1 \
+  apptainer=1.4.1-1
+
+USER ci
+
+RUN cd yay-bin && makepkg -sri --needed --noconfirm
+
+RUN yay -Syu --noconfirm miniforge
+
+WORKDIR /home/ci

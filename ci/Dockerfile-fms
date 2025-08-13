@@ -1,0 +1,6 @@
+FROM arch-gnu-openmpi-base 
+
+RUN useradd -m -d /home/ci -s /usr/bin/bash ci
+
+USER ci
+WORKDIR /home/ci
