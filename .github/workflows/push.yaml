@@ -19,6 +19,7 @@ jobs:
         context: ci/
         push: false
         file: "ci/Dockerfile-base"
+        tags: "arch-gnu-openmpi-base"
     - name: Build fms image
       uses: docker/build-push-action@v6.18.0
       with:
