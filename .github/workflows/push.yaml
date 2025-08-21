@@ -26,18 +26,18 @@ jobs:
         context: ci/
         push: true
         file: "ci/Dockerfile-fms"
-        tag: ghcr.io/rem1776/fms/fms-ci-gnu:latest
+        tags: ghcr.io/rem1776/fms/fms-ci-gnu:latest
     - name: Build fre-nctools image
       uses: docker/build-push-action@v6.18.0
       with:
         context: ci/
         push: false
         file: "ci/Dockerfile-frenct"
-        tag: ghcr.io/rem1776/fre-nctools/frenct-ci-gnu:latest
+        tags: ghcr.io/rem1776/fre-nctools/frenct-ci-gnu:latest
     - name: Build fre-cli image
       uses: docker/build-push-action@v6.18.0
       with:
         context: ci/
         push: false
         file: "ci/Dockerfile-frecli"
-        tag: ghcr.io/rem1776/frecli-ci-gnu:latest
+        tags: ghcr.io/rem1776/frecli-ci-gnu:latest
