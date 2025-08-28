@@ -1,5 +1,9 @@
 name: Build and Push CI Images
 on: push
+  branches: main
+on:
+  schedule:
+    - cron: '0 0 * * 0' # sundays @ midnight
 
 jobs:
   build-ci-images:
