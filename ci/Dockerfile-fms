@@ -1,6 +1,10 @@
-FROM arch-gnu-openmpi-base 
+FROM arch-gnu-openmpi-base
 
-RUN useradd -m -d /home/ci -s /usr/bin/bash ci
+COPY ./fms_test_input /home/unit_tests_input
+
+RUN useradd -m -u 1001 -d /home/ci -s /usr/bin/bash ci
+
+ENV CC=mpicc FC=mpifort
 
 USER ci
 WORKDIR /home/ci

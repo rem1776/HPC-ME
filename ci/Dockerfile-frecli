@@ -1,10 +1,9 @@
-# image recipe for FRE-NCtools CI
+# image recipe for fre-cli
 # uses gcc + mpich base image on arch linux
+# TODO probably better to do miniconda install manually
+FROM arch-gnu-openmpi-base
 
-FROM arch-gnu-openmpi-base 
-
-# set up user for installing yay for community packages
-RUN useradd --system --create-home ci && \
+RUN useradd -m -u 1001 -d /home/ci -s /usr/bin/bash ci && \
     pacman -Syu --noconfirm --needed sudo base-devel && \
     echo "ci ALL=(ALL:ALL) NOPASSWD:ALL" > /etc/sudoers.d/ci && \
     git clone https://aur.archlinux.org/yay-bin.git && \

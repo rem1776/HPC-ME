@@ -1,6 +1,12 @@
 FROM archlinux:latest
 
-RUN pacman -Syu --noconfirm \
+# update keyring and pre-existing packages
+RUN pacman-key --init && \
+    pacman -Sy --noconfirm --needed archlinux-keyring && \
+    pacman --noconfirm -Syyu
+
+# install packages used across CI images
+RUN pacman --noconfirm -Syu \
   gcc         \
   gcc-fortran \
   openmpi     \
@@ -8,4 +14,5 @@ RUN pacman -Syu --noconfirm \
   netcdf-fortran  \
   libyaml         \
   autoconf automake git make cmake \
+	inetutils pkgconf zip \
   && find /var/cache/pacman/ -type f -delete
